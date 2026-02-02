@@ -50,7 +50,7 @@ export async function GET(request: Request) {
       .select('source_id')
       .eq('source', 'grants_gov');
 
-    const existingSourceIds = new Set(existingGrants?.map((g) => g.source_id) || []);
+    const existingSourceIds = new Set(existingGrants?.map((g: any) => g.source_id) || []);
     log(`Found ${existingSourceIds.size} existing grants`);
 
     // Fetch posted opportunities from Simpler.Grants.gov
@@ -90,7 +90,7 @@ export async function GET(request: Request) {
 
       // Insert new grants in batches
       if (newGrants.length > 0) {
-        const { error } = await supabase.from('grants').insert(newGrants);
+        const { error } = await (supabase.from('grants') as any).insert(newGrants);
 
         if (error) {
           log(`Error inserting grants: ${error.message}`);
@@ -102,7 +102,7 @@ export async function GET(request: Request) {
       }
 
       // Check if there are more pages
-      const totalRecords = response.pagination?.total_records || response.pagination_info?.total_records || 0;
+      const totalRecords = response.pagination?.total_records || (response as any).pagination_info?.total_records || 0;
       if (opportunities.length < pageSize || totalFetched >= totalRecords || totalRecords === 0) {
         hasMore = false;
       } else {

@@ -79,8 +79,8 @@ export default function SettingsPage() {
 
     try {
       // Update profile
-      const { error: profileError } = await supabase
-        .from('user_profiles')
+      const { error: profileError } = await (supabase
+        .from('user_profiles') as any)
         .update({
           full_name: profile.full_name,
           organization_name: profile.organization_name,
@@ -95,8 +95,8 @@ export default function SettingsPage() {
 
       // Update or insert criteria
       if (criteria) {
-        const { error: criteriaError } = await supabase
-          .from('user_criteria')
+        const { error: criteriaError } = await (supabase
+          .from('user_criteria') as any)
           .upsert({
             user_id: profile.id,
             location_state: criteria.location_state,
@@ -119,8 +119,8 @@ export default function SettingsPage() {
 
       // Update or insert notification preferences
       if (notifPrefs) {
-        const { error: notifError } = await supabase
-          .from('notification_preferences')
+        const { error: notifError } = await (supabase
+          .from('notification_preferences') as any)
           .upsert({
             user_id: profile.id,
             email_frequency: notifPrefs.email_frequency,

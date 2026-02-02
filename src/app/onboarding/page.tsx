@@ -145,8 +145,8 @@ export default function OnboardingPage() {
 
     try {
       // Update user profile
-      await supabase
-        .from('user_profiles')
+      await (supabase
+        .from('user_profiles') as any)
         .update({
           organization_name: formData.organizationName || null,
           organization_type: formData.organizationType,
@@ -154,7 +154,7 @@ export default function OnboardingPage() {
         .eq('id', userId);
 
       // Insert user criteria
-      await supabase.from('user_criteria').insert({
+      await (supabase.from('user_criteria') as any).insert({
         user_id: userId,
         location_state: formData.locationState || null,
         location_city: formData.locationCity || null,
@@ -169,8 +169,8 @@ export default function OnboardingPage() {
       });
 
       // Update notification preferences
-      await supabase
-        .from('notification_preferences')
+      await (supabase
+        .from('notification_preferences') as any)
         .update({
           email_frequency: formData.emailFrequency,
           min_grant_amount: formData.minGrantAmount,

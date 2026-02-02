@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       .select('source_id')
       .like('source_id', 'AU-%');
 
-    const existingSourceIds = new Set(existingGrants?.map((g) => g.source_id) || []);
+    const existingSourceIds = new Set(existingGrants?.map((g: any) => g.source_id) || []);
     log(`Found ${existingSourceIds.size} existing Australian grants`);
 
     // Fetch from GrantConnect RSS
@@ -68,7 +68,7 @@ export async function GET(request: Request) {
         continue;
       }
 
-      const { error } = await supabase.from('grants').insert(normalized);
+      const { error } = await (supabase.from('grants') as any).insert(normalized);
 
       if (error) {
         log(`Error inserting grant "${grant.title}": ${error.message}`);

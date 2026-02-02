@@ -178,12 +178,13 @@ export default function GrantsPage() {
         return;
       }
 
-      const { data: criteria } = await supabase
+      const { data } = await supabase
         .from('user_criteria')
         .select('*')
         .eq('user_id', user.id)
         .single();
 
+      const criteria = data as UserCriteria | null;
       if (criteria) {
         setUserCriteria(criteria);
         // Apply user's criteria as default filters
@@ -226,7 +227,7 @@ export default function GrantsPage() {
       });
     } else {
       // Save
-      await supabase.from('saved_grants').insert({
+      await (supabase.from('saved_grants') as any).insert({
         user_id: user.id,
         grant_id: grantId,
       });

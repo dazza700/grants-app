@@ -79,7 +79,7 @@ export async function GET(request: Request) {
     let totalNotifications = 0;
     let totalEmails = 0;
 
-    for (const user of users || []) {
+    for (const user of (users || []) as any[]) {
       const criteria = user.user_criteria?.[0];
       const preferences = user.notification_preferences?.[0];
 
@@ -93,9 +93,9 @@ export async function GET(request: Request) {
       }
 
       // Find matching grants for this user
-      const matchingGrants = [];
+      const matchingGrants: Array<{ grant: any; score: any }> = [];
 
-      for (const grant of newGrants) {
+      for (const grant of newGrants as any[]) {
         // Check if we already notified this user about this grant
         const { data: existing } = await supabase
           .from('notification_history')
@@ -119,7 +119,7 @@ export async function GET(request: Request) {
           matchingGrants.push({ grant, score });
 
           // Create notification record
-          await supabase.from('notification_history').insert({
+          await (supabase.from('notification_history') as any).insert({
             user_id: user.id,
             grant_id: grant.id,
             match_score: score.totalScore,
@@ -144,8 +144,8 @@ export async function GET(request: Request) {
 
           // Update notification records
           for (const { grant } of matchingGrants) {
-            await supabase
-              .from('notification_history')
+            await (supabase
+              .from('notification_history') as any)
               .update({
                 email_sent: true,
                 email_sent_at: new Date().toISOString(),
