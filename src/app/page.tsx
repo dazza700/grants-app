@@ -5,15 +5,15 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-primary-50">
       {/* Navigation */}
-      <nav className="px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
-        <Link href="/" className="text-2xl font-bold text-primary-700">
+      <nav className="px-4 sm:px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
+        <Link href="/" className="text-xl sm:text-2xl font-bold text-primary-700">
           GrantMatch
         </Link>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="text-gray-600 hover:text-gray-900">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link href="/login" className="text-sm sm:text-base text-gray-600 hover:text-gray-900 whitespace-nowrap">
             Sign In
           </Link>
-          <Link href="/register" className="btn btn-primary">
+          <Link href="/register" className="btn btn-primary text-sm sm:text-base px-3 sm:px-4 py-2 whitespace-nowrap">
             Get Started
           </Link>
         </div>
