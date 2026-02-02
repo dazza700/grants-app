@@ -79,10 +79,11 @@ export default function DashboardPage() {
       if (criteria) {
 
         // Filter by state
-        if (criteria.location_state) {
+        const userState = criteria.location_state;
+        if (userState) {
           filtered = filtered.filter(grant =>
             grant.eligible_states.length === 0 || // Available to all states
-            grant.eligible_states.includes(criteria.location_state)
+            grant.eligible_states.includes(userState)
           );
         }
 
