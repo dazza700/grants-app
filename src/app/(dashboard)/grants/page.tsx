@@ -165,7 +165,7 @@ export default function GrantsPage() {
       .eq('user_id', user.id);
 
     if (data) {
-      setSavedGrantIds(new Set(data.map((sg) => sg.grant_id)));
+      setSavedGrantIds(new Set(data.map((sg: { grant_id: string }) => sg.grant_id)));
     }
   }, [supabase]);
 
