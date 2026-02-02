@@ -104,7 +104,7 @@ export default function GrantsPage() {
       console.error('Error fetching grants:', error);
       setGrants([]);
     } else {
-      let filteredGrants = data || [];
+      let filteredGrants: Grant[] = data || [];
 
       // Filter out Indigenous-specific grants if enabled
       if (filters.excludeIndigenous) {
