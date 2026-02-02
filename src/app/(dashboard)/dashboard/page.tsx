@@ -72,10 +72,10 @@ export default function DashboardPage() {
         .gte('deadline', new Date().toISOString())
         .order('posted_date', { ascending: false });
 
-      const grants = allGrants || [];
+      const grants: Grant[] = allGrants || [];
 
       // Filter grants based on user criteria
-      let filtered = grants;
+      let filtered: Grant[] = grants;
       if (criteria) {
 
         // Filter by state
