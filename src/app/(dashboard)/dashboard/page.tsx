@@ -49,11 +49,12 @@ export default function DashboardPage() {
       // Fetch user profile and criteria in parallel
       const [profileResult, criteriaResult] = await Promise.all([
         supabase.from('user_profiles').select('*').eq('id', user.id).single(),
-        supabase.from('user_criteria').select('*').eq('user_id', user.id).single(),
+        supabase.from('user_criteria').select('*').eq('user_id', user.id).maybeSingle(),
       ]);
 
       setUserProfile(profileResult.data);
-      setUserCriteria(criteriaResult.data);
+      const criteria = criteriaResult.data as UserCriteria | null;
+      setUserCriteria(criteria);
 
       // Fetch stats
       const [grantsCount, savedCount, matchesCount] = await Promise.all([
@@ -75,8 +76,7 @@ export default function DashboardPage() {
 
       // Filter grants based on user criteria
       let filtered = grants;
-      if (criteriaResult.data) {
-        const criteria = criteriaResult.data;
+      if (criteria) {
 
         // Filter by state
         if (criteria.location_state) {
